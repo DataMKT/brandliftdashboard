@@ -14,7 +14,6 @@
   .stat-card { background: #fff; border-radius: 12px; padding: 18px 22px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); border-left: 4px solid var(--c); min-width: 130px; }
   .stat-val { font-size: 26px; font-weight: 800; color: #1e293b; }
   .stat-label { font-size: 13px; font-weight: 600; color: #475569; margin-top: 2px; }
-  .stat-sub { font-size: 11px; color: #94a3b8; margin-top: 2px; }
   .tabs { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
   .tab { padding: 7px 18px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 13px; border: 1px solid #e2e8f0; background: #fff; color: #475569; }
   .tab.active { background: #6366f1; color: #fff; border-color: #6366f1; }
@@ -24,8 +23,7 @@
   .count { font-size: 12px; color: #94a3b8; }
   .panel { display: none; }
   .panel.active { display: block; }
-  .gantt-wrap { background: #fff; border-radius: 14px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); overflow-x: auto; }
-  .gantt-wrap { max-height: 75vh; overflow-y: auto; }
+  .gantt-wrap { background: #fff; border-radius: 14px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); overflow-x: auto; max-height: 75vh; overflow-y: auto; }
   .gantt-head { display: grid; grid-template-columns: 260px 90px 90px 1fr; border-bottom: 2px solid #f1f5f9; position: sticky; top: 0; background: #fff; z-index: 2; }
   .gantt-head-cell { padding: 10px 16px; font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; }
   .gantt-months { display: flex; padding: 10px 0; }
@@ -34,13 +32,11 @@
   .gantt-row:nth-child(even) { background: #fafafa; }
   .gantt-row:hover { background: #f0f4ff; }
   .gantt-cell { padding: 8px 16px; display: flex; align-items: center; }
-  .marca-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-right: 6px; }
   .badge { padding: 2px 8px; border-radius: 99px; font-size: 11px; font-weight: 600; white-space: nowrap; }
   .badge-tipo { font-size: 11px; color: #6366f1; font-weight: 600; background: #eef2ff; padding: 2px 7px; border-radius: 99px; }
   .gantt-bar-wrap { position: relative; height: 44px; display: flex; align-items: center; }
   .gantt-gridline { position: absolute; top: 0; bottom: 0; border-left: 1px solid #f1f5f9; }
   .gantt-bar { position: absolute; height: 20px; border-radius: 6px; opacity: 0.85; display: flex; align-items: center; padding-left: 6px; overflow: hidden; }
-  .gantt-bar span { font-size: 10px; color: #fff; font-weight: 700; white-space: nowrap; }
   .resumen-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
   .card { background: #fff; border-radius: 14px; padding: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
   .card h3 { font-size: 14px; font-weight: 700; color: #1e293b; margin-bottom: 16px; }
@@ -69,12 +65,15 @@
   .bm-card h3 { font-size: 14px; font-weight: 700; color: #1e293b; margin-bottom: 16px; }
   .hbar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
   .hbar-label { font-size: 11px; color: #475569; width: 150px; flex-shrink: 0; text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .hbar-track { flex: 1; background: #f1f5f9; border-radius: 99px; height: 18px; overflow: hidden; position: relative; }
+  .hbar-track { flex: 1; background: #f1f5f9; border-radius: 99px; height: 18px; overflow: hidden; }
   .hbar-fill { height: 100%; border-radius: 99px; display: flex; align-items: center; justify-content: flex-end; padding-right: 6px; }
   .hbar-val { font-size: 10px; font-weight: 700; color: #fff; white-space: nowrap; }
   .hbar-val-out { font-size: 11px; font-weight: 700; color: #475569; margin-left: 6px; }
   .metric-pill { padding: 3px 10px; border-radius: 99px; font-size: 11px; font-weight: 600; cursor: pointer; border: 1px solid #e2e8f0; background: #f8fafc; color: #475569; }
   .metric-pill.active { background: #6366f1; color: #fff; border-color: #6366f1; }
+  .sel { padding: 5px 10px; border-radius: 7px; border: 1px solid #e2e8f0; font-size: 12px; background: #fff; color: #1e293b; }
+  .filter-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 20px; }
+  .filter-row span.lbl { font-size: 12px; font-weight: 600; color: #64748b; margin-right: 4px; }
 </style>
 </head>
 <body>
@@ -83,32 +82,28 @@
   <h1>📊 Dashboard Brand Lift & Multicell</h1>
   <p class="sub" id="sub-count"></p>
 </div>
-
 <div class="stats" id="stats"></div>
-
 <div class="tabs">
   <button class="tab active" onclick="switchTab('gantt')">🗓 Gantt</button>
   <button class="tab" onclick="switchTab('resumen')">📈 Resumen</button>
   <button class="tab" onclick="switchTab('tabla')">📋 Tabla</button>
   <button class="tab" onclick="switchTab('benchmarks')">🏅 Benchmarks</button>
+  <button class="tab" onclick="switchTab('resultados')">🔬 Resultados</button>
 </div>
-
 <div class="filters" id="main-filters">
-  <label>Marca:</label>
-  <select id="f-marca" onchange="render()"></select>
-  <label>Estado:</label>
-  <select id="f-estado" onchange="render()"></select>
-  <label>Tipo:</label>
-  <select id="f-tipo" onchange="render()"></select>
+  <label>Marca:</label><select id="f-marca" onchange="render()"></select>
+  <label>Estado:</label><select id="f-estado" onchange="render()"></select>
+  <label>Tipo:</label><select id="f-tipo" onchange="render()"></select>
   <span class="count" id="f-count"></span>
 </div>
-
 <div id="panel-gantt" class="panel active"></div>
 <div id="panel-resumen" class="panel"></div>
 <div id="panel-tabla" class="panel"></div>
 <div id="panel-benchmarks" class="panel"></div>
+<div id="panel-resultados" class="panel"></div>
 
 <script>
+// ── DATOS GANTT ──────────────────────────────────────────────
 const DATA = [
   {marca:"Brahma",campana:"Verano",tipo:"Brand Lift",plataforma:"Meta",objetivo:"Awareness + Producto + Concepto SED",portfolio:"Defend Core",estado:"Done",inicio:"2025-12-01",fin:"2026-02-28"},
   {marca:"Brahma",campana:"Verano",tipo:"Brand Lift",plataforma:"TikTok",objetivo:"Awareness + Producto + Concepto SED",portfolio:"Defend Core",estado:"Done",inicio:"2025-12-01",fin:"2026-01-31"},
@@ -133,55 +128,56 @@ const DATA = [
   {marca:"Michelob Ultra",campana:"TBD",tipo:"Multicell",plataforma:"TikTok",objetivo:"TBD",portfolio:"Grow Premium",estado:"Not Started",inicio:"2026-06-01",fin:"2026-06-30"},
 ];
 
+// ── DATOS BENCHMARKS ─────────────────────────────────────────
 const BM_RAW = [
-  {marca:"Stella",campana:"It All Starts With A Stella",pp:"Meals",metrica:"Unaided Ad Recall",lift:3.5},
-  {marca:"Stella",campana:"It All Starts With A Stella",pp:"Meals",metrica:"Affinity",lift:1},
-  {marca:"Stella",campana:"It All Starts With A Stella",pp:"Meals",metrica:"Consideration",lift:4.3},
-  {marca:"Stella",campana:"Bon Apetit",pp:"Meals",metrica:"Unaided Ad Recall",lift:2.3},
-  {marca:"Stella",campana:"Bon Apetit",pp:"Meals",metrica:"Message Association",lift:3.2},
-  {marca:"Stella",campana:"Bon Apetit",pp:"Meals",metrica:"Affinity",lift:1.5},
-  {marca:"Stella",campana:"Blanche",pp:"Meals",metrica:"Unaided Ad Recall",lift:1.4},
-  {marca:"Stella",campana:"Blanche",pp:"Meals",metrica:"Message Association",lift:4.2},
-  {marca:"Stella",campana:"Blanche (Winclap) - Celda 1",pp:"Meals",metrica:"Unaided Ad Recall",lift:2.6},
-  {marca:"Stella",campana:"Blanche (Winclap) - Celda 1",pp:"Meals",metrica:"Message Association",lift:2.1},
-  {marca:"Stella",campana:"Blanche (Winclap) - Celda 2",pp:"Meals",metrica:"Unaided Ad Recall",lift:1},
-  {marca:"Stella",campana:"Blanche (Winclap) - Celda 2",pp:"Meals",metrica:"Message Association",lift:2.8},
-  {marca:"Bud",campana:"Lollapalooza 22",pp:"Music",metrica:"Standard Ad Recall",lift:2.9},
-  {marca:"Bud",campana:"Lollapalooza 22",pp:"Music",metrica:"Top-Of-Mind Awareness",lift:3.6},
-  {marca:"Bud",campana:"Bud Stage",pp:"Music",metrica:"Standard Ad Recall",lift:4.4},
-  {marca:"Bud",campana:"Bud Stage",pp:"Music",metrica:"Message Association",lift:1.7},
-  {marca:"Bud",campana:"Cancha Conmigo",pp:"Futbol",metrica:"Unaided Ad Recall",lift:8},
-  {marca:"Bud",campana:"Cancha Conmigo",pp:"Futbol",metrica:"Message Association",lift:1.9},
-  {marca:"Bud",campana:"Cancha Conmigo",pp:"Futbol",metrica:"Affinity",lift:2.5},
-  {marca:"Bud",campana:"FWC Qatar22",pp:"Futbol",metrica:"Unaided Ad Recall",lift:6.3},
-  {marca:"Bud",campana:"FWC Qatar22",pp:"Futbol",metrica:"Message Association",lift:3.1},
-  {marca:"Bud",campana:"FWC Qatar22",pp:"Futbol",metrica:"Affinity",lift:2.3},
-  {marca:"Bud",campana:"FWC Qatar22",pp:"Futbol",metrica:"Action Intent",lift:2.9},
-  {marca:"Bud",campana:"Lollapalooza 23",pp:"Music",metrica:"Standard Ad Recall",lift:3.1},
-  {marca:"Bud",campana:"Lollapalooza 24",pp:"Music",metrica:"Standard Ad Recall",lift:4.1},
-  {marca:"Corona",campana:"Isla Corona",pp:"Travel",metrica:"Unaided Ad Recall",lift:2.4},
-  {marca:"Corona",campana:"Isla Corona",pp:"Travel",metrica:"Message Association",lift:0.5},
-  {marca:"Corona",campana:"Winter",pp:"Travel",metrica:"Top-Of-Mind Awareness",lift:0.5},
-  {marca:"Quilmes",campana:"Doble Malta",pp:"-",metrica:"Standard Ad Recall",lift:3.7},
-  {marca:"Quilmes",campana:"Mundial 22",pp:"Futbol",metrica:"Top-Of-Mind Awareness",lift:2.8},
-  {marca:"Quilmes",campana:"IPA",pp:"-",metrica:"Consideration",lift:3.1},
-  {marca:"Quilmes",campana:"Futbol Local",pp:"Futbol",metrica:"Consideration",lift:4},
-  {marca:"Brahma",campana:"Carnaval",pp:"Music",metrica:"Standard Ad Recall",lift:6.1},
-  {marca:"Brahma",campana:"Carnaval",pp:"Music",metrica:"Message Agreement",lift:3.3},
-  {marca:"Brahma",campana:"Carnaval",pp:"Music",metrica:"Consideration",lift:2.1},
-  {marca:"Brahma",campana:"Juntada",pp:"-",metrica:"Standard Ad Recall",lift:3},
-  {marca:"Brahma",campana:"Etiquetas",pp:"-",metrica:"Standard Ad Recall",lift:3.1},
-  {marca:"Andes",campana:"Equity",pp:"-",metrica:"Standard Ad Recall",lift:7.4},
-  {marca:"Andes",campana:"Equity",pp:"-",metrica:"Familiarity",lift:5},
-  {marca:"Andes",campana:"Vendimia Nacional",pp:"-",metrica:"Action Intent",lift:1.6},
-  {marca:"Patagonia",campana:"Incendios",pp:"Sustainability",metrica:"Standard Ad Recall",lift:2.9},
-  {marca:"Patagonia",campana:"Incendios 2",pp:"Sustainability",metrica:"Standard Ad Recall",lift:4.1},
-  {marca:"Patagonia",campana:"Incendios 2",pp:"Sustainability",metrica:"Top-Of-Mind Awareness",lift:1},
-  {marca:"Patagonia",campana:"Litro Retornable",pp:"Sustainability",metrica:"Unaided Ad Recall",lift:4.3},
-  {marca:"Patagonia",campana:"Litro Retornable",pp:"Sustainability",metrica:"Message Association",lift:3},
-  {marca:"Michelob",campana:"Funcional",pp:"-",metrica:"Standard Ad Recall",lift:2.6},
+  {marca:"Stella",campana:"It All Starts With A Stella",pp:"Meals",metrica:"Unaided Ad Recall",lift:3.5,anio:2022},
+  {marca:"Stella",campana:"It All Starts With A Stella",pp:"Meals",metrica:"Affinity",lift:1,anio:2022},
+  {marca:"Stella",campana:"It All Starts With A Stella",pp:"Meals",metrica:"Consideration",lift:4.3,anio:2022},
+  {marca:"Stella",campana:"Bon Apetit",pp:"Meals",metrica:"Unaided Ad Recall",lift:2.3,anio:2022},
+  {marca:"Stella",campana:"Bon Apetit",pp:"Meals",metrica:"Message Association",lift:3.2,anio:2022},
+  {marca:"Stella",campana:"Bon Apetit",pp:"Meals",metrica:"Affinity",lift:1.5,anio:2022},
+  {marca:"Stella",campana:"Blanche",pp:"Meals",metrica:"Unaided Ad Recall",lift:1.4,anio:2023},
+  {marca:"Stella",campana:"Blanche",pp:"Meals",metrica:"Message Association",lift:4.2,anio:2023},
+  {marca:"Bud",campana:"Lollapalooza 22",pp:"Music",metrica:"Standard Ad Recall",lift:2.9,anio:2022},
+  {marca:"Bud",campana:"Lollapalooza 22",pp:"Music",metrica:"Top-Of-Mind Awareness",lift:3.6,anio:2022},
+  {marca:"Bud",campana:"Bud Stage",pp:"Music",metrica:"Standard Ad Recall",lift:4.4,anio:2022},
+  {marca:"Bud",campana:"Bud Stage",pp:"Music",metrica:"Message Association",lift:1.7,anio:2022},
+  {marca:"Bud",campana:"Cancha Conmigo",pp:"Futbol",metrica:"Unaided Ad Recall",lift:8,anio:2022},
+  {marca:"Bud",campana:"Cancha Conmigo",pp:"Futbol",metrica:"Message Association",lift:1.9,anio:2022},
+  {marca:"Bud",campana:"Cancha Conmigo",pp:"Futbol",metrica:"Affinity",lift:2.5,anio:2022},
+  {marca:"Bud",campana:"FWC Qatar22",pp:"Futbol",metrica:"Unaided Ad Recall",lift:6.3,anio:2022},
+  {marca:"Bud",campana:"FWC Qatar22",pp:"Futbol",metrica:"Message Association",lift:3.1,anio:2022},
+  {marca:"Bud",campana:"FWC Qatar22",pp:"Futbol",metrica:"Affinity",lift:2.3,anio:2022},
+  {marca:"Bud",campana:"FWC Qatar22",pp:"Futbol",metrica:"Action Intent",lift:2.9,anio:2022},
+  {marca:"Bud",campana:"Lollapalooza 23",pp:"Music",metrica:"Standard Ad Recall",lift:3.1,anio:2023},
+  {marca:"Bud",campana:"Lollapalooza 24",pp:"Music",metrica:"Standard Ad Recall",lift:4.1,anio:2024},
+  {marca:"Corona",campana:"Isla Corona",pp:"Travel",metrica:"Unaided Ad Recall",lift:2.4,anio:2022},
+  {marca:"Corona",campana:"Isla Corona",pp:"Travel",metrica:"Message Association",lift:0.5,anio:2022},
+  {marca:"Corona",campana:"Winter",pp:"Travel",metrica:"Top-Of-Mind Awareness",lift:0.5,anio:2023},
+  {marca:"Quilmes",campana:"Doble Malta",pp:"-",metrica:"Standard Ad Recall",lift:3.7,anio:2022},
+  {marca:"Quilmes",campana:"Mundial 22",pp:"Futbol",metrica:"Top-Of-Mind Awareness",lift:2.8,anio:2022},
+  {marca:"Quilmes",campana:"IPA",pp:"-",metrica:"Consideration",lift:3.1,anio:2023},
+  {marca:"Quilmes",campana:"Futbol Local",pp:"Futbol",metrica:"Consideration",lift:4,anio:2024},
+  {marca:"Brahma",campana:"Carnaval",pp:"Music",metrica:"Standard Ad Recall",lift:6.1,anio:2022},
+  {marca:"Brahma",campana:"Carnaval",pp:"Music",metrica:"Message Agreement",lift:3.3,anio:2022},
+  {marca:"Brahma",campana:"Carnaval",pp:"Music",metrica:"Consideration",lift:2.1,anio:2022},
+  {marca:"Brahma",campana:"Juntada",pp:"-",metrica:"Standard Ad Recall",lift:3,anio:2022},
+  {marca:"Brahma",campana:"Etiquetas",pp:"-",metrica:"Standard Ad Recall",lift:3.1,anio:2022},
+  {marca:"Brahma",campana:"Intrínsecos - Promo",pp:"Marca",metrica:"Affinity",lift:3.9,anio:2025},
+  {marca:"Brahma",campana:"Intrínsecos",pp:"Marca",metrica:"Unaided Ad Recall",lift:5.8,anio:2025},
+  {marca:"Brahma",campana:"Intrínsecos",pp:"Marca",metrica:"Message Association",lift:4.2,anio:2025},
+  {marca:"Andes",campana:"Equity",pp:"-",metrica:"Standard Ad Recall",lift:7.4,anio:2022},
+  {marca:"Andes",campana:"Equity",pp:"-",metrica:"Familiarity",lift:5,anio:2022},
+  {marca:"Andes",campana:"Vendimia Nacional",pp:"-",metrica:"Action Intent",lift:1.6,anio:2022},
+  {marca:"Patagonia",campana:"Incendios",pp:"Sustainability",metrica:"Standard Ad Recall",lift:2.9,anio:2023},
+  {marca:"Patagonia",campana:"Incendios 2",pp:"Sustainability",metrica:"Standard Ad Recall",lift:4.1,anio:2023},
+  {marca:"Patagonia",campana:"Incendios 2",pp:"Sustainability",metrica:"Top-Of-Mind Awareness",lift:1,anio:2023},
+  {marca:"Patagonia",campana:"Litro Retornable",pp:"Sustainability",metrica:"Unaided Ad Recall",lift:4.3,anio:2023},
+  {marca:"Patagonia",campana:"Litro Retornable",pp:"Sustainability",metrica:"Message Association",lift:3,anio:2023},
+  {marca:"Michelob",campana:"Funcional",pp:"-",metrica:"Standard Ad Recall",lift:2.6,anio:2022},
 ];
 
+// ── COLORES ──────────────────────────────────────────────────
 const ESTADO_COLOR = {
   "Done":{bg:"#dcfce7",text:"#166534",bar:"#22c55e"},
   "In Progress":{bg:"#dbeafe",text:"#1e40af",bar:"#3b82f6"},
@@ -198,77 +194,97 @@ const BM_MARCA_COLOR = {
 };
 const PP_COLOR = {
   "Meals":"#f97316","Music":"#8b5cf6","Futbol":"#22c55e","Travel":"#3b82f6",
-  "Sustainability":"#10b981","Sports":"#06b6d4","-":"#94a3b8"
+  "Sustainability":"#10b981","Sports":"#06b6d4","Marca":"#ec4899","-":"#94a3b8"
 };
 const MONTHS = ["dic-25","ene-26","feb-26","mar-26","abr-26","may-26","jun-26","jul-26","ago-26"];
 const MONTH_DATES = {"dic-25":"2025-12-01","ene-26":"2026-01-01","feb-26":"2026-02-01","mar-26":"2026-03-01","abr-26":"2026-04-01","may-26":"2026-05-01","jun-26":"2026-06-01","jul-26":"2026-07-01","ago-26":"2026-08-01"};
 const GANTT_START = new Date("2025-12-01");
-const GANTT_END = new Date("2026-08-31");
-const TOTAL_DAYS = (GANTT_END - GANTT_START) / 86400000;
+const GANTT_END   = new Date("2026-08-31");
+const TOTAL_DAYS  = (GANTT_END - GANTT_START) / 86400000;
 
+// ── ESTADO ───────────────────────────────────────────────────
+let currentTab = "gantt";
+let bmMetrica  = "Todas";
+let bmAnio     = "Todos";
+let resMarca   = "Stella";
+let resCampana = "Todas";
+let resAnio    = "Todos";
+
+// ── HELPERS ──────────────────────────────────────────────────
 function dayOff(d){ return Math.max(0,(new Date(d)-GANTT_START)/86400000); }
 function badge(e){ const c=ESTADO_COLOR[e]||ESTADO_COLOR["Not Started"]; return `<span class="badge" style="background:${c.bg};color:${c.text}">${e}</span>`; }
+function avg(arr){ return arr.length ? arr.reduce((a,b)=>a+b,0)/arr.length : 0; }
+function sel(id){ return document.getElementById(id).value; }
+function mkSelect(opts, current, onchange){
+  return `<select class="sel" onchange="${onchange}(this.value)">${opts.map(o=>`<option ${String(o)===String(current)?'selected':''}>${o}</option>`).join('')}</select>`;
+}
+function hbar(label, val, maxVal, color, extra=""){
+  const pct = Math.min((val/maxVal)*100, 100);
+  const inside = pct > 28;
+  return `<div class="hbar-row">
+    <span class="hbar-label" title="${label}">${label}</span>
+    <div class="hbar-track"><div class="hbar-fill" style="width:${pct}%;background:${color}">
+      ${inside?`<span class="hbar-val">${val.toFixed(1)}</span>`:''}
+    </div></div>
+    ${!inside?`<span class="hbar-val-out">${val.toFixed(1)}</span>`:''}
+    ${extra}
+  </div>`;
+}
 
-let currentTab="gantt", bmMetrica="Todas";
-
+// ── TAB SWITCH ───────────────────────────────────────────────
 function switchTab(t){
-  currentTab=t;
-  document.querySelectorAll('.tab').forEach((b,i)=>b.classList.toggle('active',['gantt','resumen','tabla','benchmarks'][i]===t));
+  currentTab = t;
+  const names = ['gantt','resumen','tabla','benchmarks','resultados'];
+  document.querySelectorAll('.tab').forEach((b,i)=>b.classList.toggle('active', names[i]===t));
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.getElementById('panel-'+t).classList.add('active');
-  document.getElementById('main-filters').style.display=t==='benchmarks'?'none':'flex';
+  document.getElementById('main-filters').style.display = (t==='benchmarks'||t==='resultados') ? 'none' : 'flex';
   render();
 }
 
 function getFiltered(){
-  const m=document.getElementById('f-marca').value;
-  const e=document.getElementById('f-estado').value;
-  const t=document.getElementById('f-tipo').value;
+  const m=sel('f-marca'), e=sel('f-estado'), t=sel('f-tipo');
   return DATA.filter(d=>(m==="Todas"||d.marca===m)&&(e==="Todos"||d.estado===e)&&(t==="Todos"||d.tipo===t));
 }
 
 function initFilters(){
-  document.getElementById('f-marca').innerHTML=["Todas",...new Set(DATA.map(d=>d.marca))].map(m=>`<option>${m}</option>`).join('');
-  document.getElementById('f-estado').innerHTML=["Todos","Done","In Progress","Set Up","Not Started"].map(e=>`<option>${e}</option>`).join('');
-  document.getElementById('f-tipo').innerHTML=["Todos","Brand Lift","Multicell"].map(t=>`<option>${t}</option>`).join('');
+  document.getElementById('f-marca').innerHTML  = ["Todas",...new Set(DATA.map(d=>d.marca))].map(m=>`<option>${m}</option>`).join('');
+  document.getElementById('f-estado').innerHTML = ["Todos","Done","In Progress","Set Up","Not Started"].map(e=>`<option>${e}</option>`).join('');
+  document.getElementById('f-tipo').innerHTML   = ["Todos","Brand Lift","Multicell"].map(t=>`<option>${t}</option>`).join('');
 }
 
+// ── STATS ────────────────────────────────────────────────────
 function renderStats(){
-  const total=DATA.length;
   const counts={"Done":0,"In Progress":0,"Set Up":0,"Not Started":0};
-  DATA.forEach(d=>counts[d.estado]=(counts[d.estado]||0)+1);
-  const cards=[
-    {label:"Total estudios",val:total,c:"#6366f1"},
+  DATA.forEach(d=>counts[d.estado]++);
+  document.getElementById('stats').innerHTML=[
+    {label:"Total estudios",val:DATA.length,c:"#6366f1"},
     {label:"Done",val:counts["Done"],c:"#22c55e"},
     {label:"In Progress",val:counts["In Progress"],c:"#3b82f6"},
     {label:"Set Up",val:counts["Set Up"],c:"#eab308"},
     {label:"Not Started",val:counts["Not Started"],c:"#d1d5db"},
-  ];
-  document.getElementById('stats').innerHTML=cards.map(c=>`
-    <div class="stat-card" style="--c:${c.c}">
-      <div class="stat-val">${c.val}</div>
-      <div class="stat-label">${c.label}</div>
-    </div>`).join('');
-  document.getElementById('sub-count').textContent=`${total} estudios · dic 2025 – ago 2026`;
+  ].map(c=>`<div class="stat-card" style="--c:${c.c}"><div class="stat-val">${c.val}</div><div class="stat-label">${c.label}</div></div>`).join('');
+  document.getElementById('sub-count').textContent=`${DATA.length} estudios · dic 2025 – ago 2026`;
 }
 
+// ── GANTT ────────────────────────────────────────────────────
 function renderGantt(filtered){
   const mh=MONTHS.map(m=>`<div class="gantt-month">${m}</div>`).join('');
   const rows=filtered.map((d,i)=>{
-    const s=dayOff(d.inicio),e=dayOff(d.fin);
+    const s=dayOff(d.inicio), e=dayOff(d.fin);
     const left=(s/TOTAL_DAYS)*100, width=Math.max(((e-s)/TOTAL_DAYS)*100,1.2);
     const c=ESTADO_COLOR[d.estado]||ESTADO_COLOR["Not Started"];
     const mc=MARCA_COLOR[d.marca]||"#6366f1";
     const gl=MONTHS.map((_,mi)=>`<div class="gantt-gridline" style="left:${(mi/MONTHS.length)*100}%"></div>`).join('');
     return `<div class="gantt-row">
       <div class="gantt-cell" style="flex-direction:column;align-items:flex-start;gap:2px">
-        <div style="display:flex;align-items:center"><div class="marca-dot" style="background:${mc}"></div><span style="font-size:12px;font-weight:700;color:#1e293b">${d.marca}</span></div>
+        <div style="display:flex;align-items:center"><div style="width:8px;height:8px;border-radius:50%;background:${mc};flex-shrink:0;margin-right:6px"></div><span style="font-size:12px;font-weight:700;color:#1e293b">${d.marca}</span></div>
         <span style="font-size:11px;color:#64748b;margin-left:14px">${d.campana} · ${d.plataforma}</span>
       </div>
       <div class="gantt-cell">${badge(d.estado)}</div>
       <div class="gantt-cell"><span class="badge-tipo">${d.tipo}</span></div>
       <div class="gantt-bar-wrap">${gl}
-        <div class="gantt-bar" style="left:${left}%;width:${width}%;background:${c.bar}" title="${d.campana} · ${d.objetivo}"><span></span></div>
+        <div class="gantt-bar" style="left:${left}%;width:${width}%;background:${c.bar}" title="${d.campana} · ${d.objetivo}"></div>
       </div>
     </div>`;
   }).join('');
@@ -283,37 +299,29 @@ function renderGantt(filtered){
     </div>`;
 }
 
+// ── RESUMEN ──────────────────────────────────────────────────
 function renderResumen(){
   const porMarca={};
-  DATA.forEach(d=>{
-    if(!porMarca[d.marca]) porMarca[d.marca]={total:0};
-    porMarca[d.marca].total++;
-  });
-  const marcaRows=Object.entries(porMarca).map(([m,v])=>`
+  DATA.forEach(d=>{ if(!porMarca[d.marca]) porMarca[d.marca]=0; porMarca[d.marca]++; });
+  const marcaRows=Object.entries(porMarca).map(([m,n])=>`
     <div class="bar-row">
-      <div class="bar-row-top">
-        <span class="bar-label"><span style="width:10px;height:10px;border-radius:50%;background:${MARCA_COLOR[m]||'#6366f1'};display:inline-block"></span>${m}</span>
-        <span class="bar-val">${v.total} estudios</span>
-      </div>
-      <div class="bar-track"><div class="bar-fill" style="width:${(v.total/DATA.length)*100}%;background:${MARCA_COLOR[m]||'#6366f1'}"></div></div>
+      <div class="bar-row-top"><span class="bar-label"><span style="width:10px;height:10px;border-radius:50%;background:${MARCA_COLOR[m]||'#6366f1'};display:inline-block"></span>${m}</span><span class="bar-val">${n} estudios</span></div>
+      <div class="bar-track"><div class="bar-fill" style="width:${(n/DATA.length)*100}%;background:${MARCA_COLOR[m]||'#6366f1'}"></div></div>
     </div>`).join('');
-  const plats=["Meta","TikTok","Youtube","X"];
   const platColors={"Meta":"#1877f2","TikTok":"#010101","Youtube":"#ff0000","X":"#000"};
-  const platRows=plats.map(p=>{
+  const platRows=["Meta","TikTok","Youtube","X"].map(p=>{
     const n=DATA.filter(d=>d.plataforma===p).length;
-    return `<div class="bar-row"><div class="bar-row-top"><span class="bar-label">${p}</span><span class="bar-val">${n} estudios</span></div>
-      <div class="bar-track"><div class="bar-fill" style="width:${(n/DATA.length)*100}%;background:${platColors[p]||'#6366f1'}"></div></div></div>`;
+    return `<div class="bar-row"><div class="bar-row-top"><span class="bar-label">${p}</span><span class="bar-val">${n}</span></div>
+      <div class="bar-track"><div class="bar-fill" style="width:${(n/DATA.length)*100}%;background:${platColors[p]}"></div></div></div>`;
   }).join('');
-  const ports=[...new Set(DATA.map(d=>d.portfolio))];
   const portCols=["#6366f1","#f97316","#22c55e","#ec4899"];
-  const portRows=ports.map((p,i)=>{
+  const portRows=[...new Set(DATA.map(d=>d.portfolio))].map((p,i)=>{
     const n=DATA.filter(d=>d.portfolio===p).length;
-    return `<div class="bar-row"><div class="bar-row-top"><span class="bar-label">${p}</span><span class="bar-val">${n} estudios</span></div>
+    return `<div class="bar-row"><div class="bar-row-top"><span class="bar-label">${p}</span><span class="bar-val">${n}</span></div>
       <div class="bar-track"><div class="bar-fill" style="width:${(n/DATA.length)*100}%;background:${portCols[i%portCols.length]}"></div></div></div>`;
   }).join('');
   const colCols=MONTHS.map(m=>{
-    const mDate=new Date(MONTH_DATES[m]);
-    const mEnd=new Date(mDate.getFullYear(),mDate.getMonth()+1,0);
+    const mDate=new Date(MONTH_DATES[m]), mEnd=new Date(mDate.getFullYear(),mDate.getMonth()+1,0);
     const n=DATA.filter(d=>new Date(d.inicio)<=mEnd&&new Date(d.fin)>=mDate).length;
     return `<div class="col-item"><span class="col-num">${n}</span><div class="col-bar" style="height:${Math.max((n/12)*80,2)}px"></div><span class="col-lbl">${m}</span></div>`;
   }).join('');
@@ -326,18 +334,14 @@ function renderResumen(){
     </div>`;
 }
 
+// ── TABLA ────────────────────────────────────────────────────
 function renderTabla(filtered){
-  const rows=filtered.map(d=>`
-    <tr>
-      <td><div style="display:flex;align-items:center;gap:6px"><div style="width:8px;height:8px;border-radius:50%;background:${MARCA_COLOR[d.marca]||'#6366f1'};flex-shrink:0"></div><strong style="color:#1e293b">${d.marca}</strong></div></td>
-      <td>${d.campana}</td>
-      <td><span class="badge-tipo">${d.tipo}</span></td>
-      <td>${d.plataforma}</td>
-      <td>${d.portfolio}</td>
-      <td>${badge(d.estado)}</td>
-      <td>${d.inicio.slice(0,7)}</td>
-      <td>${d.fin.slice(0,7)}</td>
-    </tr>`).join('');
+  const rows=filtered.map(d=>`<tr>
+    <td><div style="display:flex;align-items:center;gap:6px"><div style="width:8px;height:8px;border-radius:50%;background:${MARCA_COLOR[d.marca]||'#6366f1'};flex-shrink:0"></div><strong style="color:#1e293b">${d.marca}</strong></div></td>
+    <td>${d.campana}</td><td><span class="badge-tipo">${d.tipo}</span></td>
+    <td>${d.plataforma}</td><td>${d.portfolio}</td><td>${badge(d.estado)}</td>
+    <td>${d.inicio.slice(0,7)}</td><td>${d.fin.slice(0,7)}</td>
+  </tr>`).join('');
   document.getElementById('panel-tabla').innerHTML=`
     <div class="table-wrap"><table>
       <thead><tr><th>Marca</th><th>Campaña</th><th>Tipo</th><th>Plataforma</th><th>Portfolio</th><th>Estado</th><th>Inicio</th><th>Fin</th></tr></thead>
@@ -345,63 +349,132 @@ function renderTabla(filtered){
     </table></div>`;
 }
 
-function avg(arr){ return arr.length?(arr.reduce((a,b)=>a+b,0)/arr.length):0; }
-function hbar(label,val,maxVal,color){
-  const pct=Math.min((val/maxVal)*100,100);
-  const inside=pct>25;
-  return `<div class="hbar-row">
-    <span class="hbar-label" title="${label}">${label}</span>
-    <div class="hbar-track"><div class="hbar-fill" style="width:${pct}%;background:${color}">
-      ${inside?`<span class="hbar-val">${val.toFixed(1)}</span>`:''}
-    </div></div>
-    ${!inside?`<span class="hbar-val-out">${val.toFixed(1)}</span>`:''}
-  </div>`;
-}
-
+// ── BENCHMARKS ───────────────────────────────────────────────
 function renderBenchmarks(){
   const validos=BM_RAW.filter(d=>d.lift!==null&&!isNaN(d.lift));
   const metricas=["Todas",...new Set(validos.map(d=>d.metrica))];
-  const filtered=bmMetrica==="Todas"?validos:validos.filter(d=>d.metrica===bmMetrica);
+  const anios=["Todos",...[...new Set(validos.map(d=>d.anio))].sort()];
+  const filtered=(bmAnio==="Todos"?validos:validos.filter(d=>String(d.anio)===String(bmAnio))).filter(d=>bmMetrica==="Todas"||d.metrica===bmMetrica);
+
   const pills=metricas.map(m=>`<span class="metric-pill ${m===bmMetrica?'active':''}" onclick="setBmMetrica('${m}')">${m}</span>`).join('');
+  const anioSel=mkSelect(anios, bmAnio, "setBmAnio");
 
   const marcas=[...new Set(filtered.map(d=>d.marca))];
-  const maxM=Math.max(...marcas.map(m=>avg(filtered.filter(d=>d.marca===m).map(d=>d.lift))));
+  const maxM=Math.max(...marcas.map(m=>avg(filtered.filter(d=>d.marca===m).map(d=>d.lift))),1);
   const porMarcaRows=marcas.map(m=>({m,v:avg(filtered.filter(d=>d.marca===m).map(d=>d.lift))})).sort((a,b)=>b.v-a.v).map(({m,v})=>hbar(m,v,maxM,BM_MARCA_COLOR[m]||"#6366f1")).join('');
 
   const mets=[...new Set(filtered.map(d=>d.metrica))];
-  const maxMe=Math.max(...mets.map(me=>avg(filtered.filter(d=>d.metrica===me).map(d=>d.lift))));
-  const metRows=mets.map(me=>({me,v:avg(filtered.filter(d=>d.metrica===me).map(d=>d.lift))})).sort((a,b)=>b.v-a.v).map(({me,v})=>hbar(me,v,maxMe,"#6366f1")).join('');
+  const maxMe=Math.max(...mets.map(me=>avg(filtered.filter(d=>d.metrica===me).map(d=>d.lift))),1);
+  const metRows=mets.map(me=>{
+    const rows=filtered.filter(d=>d.metrica===me);
+    const n=rows.length, v=avg(rows.map(d=>d.lift));
+    const nLabel=`<span style="font-size:10px;font-weight:600;white-space:nowrap;margin-left:4px;color:${n<=2?'#f59e0b':'#94a3b8'}">${n<=2?'⚠️ ':''}n=${n}</span>`;
+    return {v, html:hbar(me,v,maxMe,"#6366f1",nLabel)};
+  }).sort((a,b)=>b.v-a.v).map(x=>x.html).join('');
 
   const pps=[...new Set(filtered.map(d=>d.pp))].filter(p=>p&&p!=="-");
-  const maxPP=Math.max(...pps.map(p=>avg(filtered.filter(d=>d.pp===p).map(d=>d.lift))));
+  const maxPP=Math.max(...pps.map(p=>avg(filtered.filter(d=>d.pp===p).map(d=>d.lift))),1);
   const ppRows=pps.map(p=>({p,v:avg(filtered.filter(d=>d.pp===p).map(d=>d.lift))})).sort((a,b)=>b.v-a.v).map(({p,v})=>hbar(p,v,maxPP,PP_COLOR[p]||"#94a3b8")).join('');
 
   const camps=[...new Set(filtered.map(d=>d.campana))];
-  const maxC=Math.max(...camps.map(c=>avg(filtered.filter(d=>d.campana===c).map(d=>d.lift))));
+  const maxC=Math.max(...camps.map(c=>avg(filtered.filter(d=>d.campana===c).map(d=>d.lift))),1);
   const campRows=camps.map(c=>{const rows=filtered.filter(d=>d.campana===c);return{c,marca:rows[0]?.marca||"",v:avg(rows.map(d=>d.lift))};}).sort((a,b)=>b.v-a.v).slice(0,12).map(({c,marca,v})=>hbar(`${c} (${marca})`,v,maxC,BM_MARCA_COLOR[marca]||"#6366f1")).join('');
 
   document.getElementById('panel-benchmarks').innerHTML=`
     <div style="margin-bottom:16px">
-      <div style="font-size:12px;font-weight:600;color:#64748b;margin-bottom:8px">Filtrar por métrica:</div>
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:10px">
+        <span class="lbl" style="font-size:12px;font-weight:600;color:#64748b">Año:</span>${anioSel}
+      </div>
+      <div style="font-size:12px;font-weight:600;color:#64748b;margin-bottom:8px">Filtrar por pregunta:</div>
       <div style="display:flex;gap:6px;flex-wrap:wrap">${pills}</div>
     </div>
     <div class="bm-grid">
-      <div class="bm-card"><h3>📊 Lift promedio por Marca</h3>${porMarcaRows}</div>
-      <div class="bm-card"><h3>🎯 Lift promedio por Métrica</h3>${metRows}</div>
-      <div class="bm-card"><h3>🔥 Lift promedio por Passion Point</h3>${ppRows||'<p style="color:#94a3b8;font-size:12px">Sin datos para esta métrica</p>'}</div>
-      <div class="bm-card" style="grid-column:1/-1"><h3>🏆 Ranking de Campañas por Lift (top 12)</h3>${campRows}</div>
+      <div class="bm-card"><h3>📊 Lift promedio por Marca</h3>${porMarcaRows||'<p style="color:#94a3b8;font-size:12px">Sin datos</p>'}</div>
+      <div class="bm-card"><h3>🎯 Lift promedio por Pregunta</h3>${metRows||'<p style="color:#94a3b8;font-size:12px">Sin datos</p>'}</div>
+      <div class="bm-card"><h3>🔥 Lift promedio por Passion Point</h3>${ppRows||'<p style="color:#94a3b8;font-size:12px">Sin datos</p>'}</div>
+      <div class="bm-card" style="grid-column:1/-1"><h3>🏆 Ranking de Campañas por Lift (top 12)</h3>${campRows||'<p style="color:#94a3b8;font-size:12px">Sin datos</p>'}</div>
     </div>`;
 }
 
 function setBmMetrica(m){ bmMetrica=m; renderBenchmarks(); }
+function setBmAnio(a){ bmAnio=a; renderBenchmarks(); }
 
+// ── RESULTADOS ───────────────────────────────────────────────
+function renderResultados(){
+  const validos=BM_RAW.filter(d=>d.lift!==null&&!isNaN(d.lift));
+  const marcas=[...new Set(validos.map(d=>d.marca))];
+  const anios=["Todos",...[...new Set(validos.map(d=>d.anio))].sort()];
+
+  const filtByMarcaAnio=validos.filter(d=>
+    d.marca===resMarca && (resAnio==="Todos"||String(d.anio)===String(resAnio))
+  );
+  const campanas=["Todas",...new Set(filtByMarcaAnio.map(d=>d.campana))];
+  if(!campanas.includes(resCampana)) resCampana="Todas";
+
+  // Benchmark global por pregunta (todos los datos, sin filtro)
+  const bnk={};
+  [...new Set(validos.map(d=>d.metrica))].forEach(me=>{
+    bnk[me]=avg(validos.filter(d=>d.metrica===me).map(d=>d.lift));
+  });
+
+  const marcaSel  = mkSelect(marcas,   resMarca,   "setResMarca");
+  const anioSel   = mkSelect(anios,    resAnio,    "setResAnio");
+  const campSel   = mkSelect(campanas, resCampana, "setResCampana");
+
+  const filtered=filtByMarcaAnio.filter(d=>resCampana==="Todas"||d.campana===resCampana);
+  const camps=[...new Set(filtered.map(d=>d.campana))];
+  const maxLift=camps.length ? Math.max(...filtered.flatMap(d=>[d.lift, bnk[d.metrica]||0]),1)*1.15 : 1;
+
+  const vis1=camps.map(c=>{
+    const rows=filtered.filter(d=>d.campana===c);
+    const bars=rows.map(d=>{
+      const b=bnk[d.metrica]||0;
+      const barPct=(d.lift/maxLift)*100;
+      const bnkPct=(b/maxLift)*100;
+      const over=d.lift>=b;
+      return `<div style="margin-bottom:18px">
+        <div style="display:flex;justify-content:space-between;margin-bottom:3px">
+          <span style="font-size:11px;color:#475569;font-weight:600">${d.metrica}</span>
+          <span style="font-size:11px;color:${over?'#16a34a':'#dc2626'};font-weight:700">${d.lift.toFixed(1)} ${over?'↑':'↓'}</span>
+        </div>
+        <div style="position:relative;height:22px;background:#f1f5f9;border-radius:6px;margin-top:12px">
+          <div style="position:absolute;left:0;top:0;height:100%;width:${barPct}%;background:${over?'#22c55e':'#ef4444'};border-radius:6px;opacity:0.8"></div>
+          <div style="position:absolute;top:-5px;bottom:-5px;width:2px;background:#6366f1;border-radius:2px;left:${bnkPct}%"></div>
+          <span style="position:absolute;left:${bnkPct+0.5}%;top:-14px;font-size:9px;color:#6366f1;font-weight:700;white-space:nowrap">bnk ${b.toFixed(1)}</span>
+        </div>
+      </div>`;
+    }).join('');
+    return `<div class="bm-card">
+      <h3 style="display:flex;align-items:center;gap:8px">
+        <span style="width:10px;height:10px;border-radius:50%;background:${BM_MARCA_COLOR[resMarca]||'#6366f1'};display:inline-block"></span>${c}
+      </h3>
+      <div style="margin-top:18px">${bars}</div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('panel-resultados').innerHTML=`
+    <div class="filter-row">
+      <div><span class="lbl">Marca:</span>${marcaSel}</div>
+      <div><span class="lbl">Año:</span>${anioSel}</div>
+      <div><span class="lbl">Campaña:</span>${campSel}</div>
+      <span style="font-size:11px;color:#94a3b8">Benchmark = promedio global por pregunta</span>
+    </div>
+    <div class="bm-grid">${vis1||'<p style="color:#94a3b8;font-size:12px">Sin datos para esta selección</p>'}</div>`;
+}
+
+function setResMarca(m){ resMarca=m; resCampana="Todas"; resAnio="Todos"; renderResultados(); }
+function setResCampana(c){ resCampana=c; renderResultados(); }
+function setResAnio(a){ resAnio=a; resCampana="Todas"; renderResultados(); }
+
+// ── RENDER PRINCIPAL ─────────────────────────────────────────
 function render(){
   const filtered=getFiltered();
   document.getElementById('f-count').textContent=filtered.length+' estudios';
-  if(currentTab==='gantt') renderGantt(filtered);
+  if(currentTab==='gantt')        renderGantt(filtered);
   else if(currentTab==='resumen') renderResumen();
-  else if(currentTab==='tabla') renderTabla(filtered);
-  else renderBenchmarks();
+  else if(currentTab==='tabla')   renderTabla(filtered);
+  else if(currentTab==='benchmarks') renderBenchmarks();
+  else if(currentTab==='resultados') renderResultados();
 }
 
 initFilters(); renderStats(); render();
