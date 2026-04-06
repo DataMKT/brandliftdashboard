@@ -300,34 +300,35 @@ function renderGantt(filtered){
 }
 
 // ── RESUMEN ──────────────────────────────────────────────────
-function renderResumen(){
+function renderResumen(filtered){
   const porMarca={};
-  DATA.forEach(d=>{ if(!porMarca[d.marca]) porMarca[d.marca]=0; porMarca[d.marca]++; });
+  filtered.forEach(d=>{ if(!porMarca[d.marca]) porMarca[d.marca]=0; porMarca[d.marca]++; });
   const marcaRows=Object.entries(porMarca).map(([m,n])=>`
     <div class="bar-row">
       <div class="bar-row-top"><span class="bar-label"><span style="width:10px;height:10px;border-radius:50%;background:${MARCA_COLOR[m]||'#6366f1'};display:inline-block"></span>${m}</span><span class="bar-val">${n} estudios</span></div>
-      <div class="bar-track"><div class="bar-fill" style="width:${(n/DATA.length)*100}%;background:${MARCA_COLOR[m]||'#6366f1'}"></div></div>
+      <div class="bar-track"><div class="bar-fill" style="width:${(n/filtered.length)*100}%;background:${MARCA_COLOR[m]||'#6366f1'}"></div></div>
     </div>`).join('');
   const platColors={"Meta":"#1877f2","TikTok":"#010101","Youtube":"#ff0000","X":"#000"};
   const platRows=["Meta","TikTok","Youtube","X"].map(p=>{
-    const n=DATA.filter(d=>d.plataforma===p).length;
+    const n=filtered.filter(d=>d.plataforma===p).length;
     return `<div class="bar-row"><div class="bar-row-top"><span class="bar-label">${p}</span><span class="bar-val">${n}</span></div>
-      <div class="bar-track"><div class="bar-fill" style="width:${(n/DATA.length)*100}%;background:${platColors[p]}"></div></div></div>`;
+      <div class="bar-track"><div class="bar-fill" style="width:${filtered.length?((n/filtered.length)*100):0}%;background:${platColors[p]}"></div></div></div>`;
   }).join('');
   const portCols=["#6366f1","#f97316","#22c55e","#ec4899"];
   const portRows=[...new Set(DATA.map(d=>d.portfolio))].map((p,i)=>{
-    const n=DATA.filter(d=>d.portfolio===p).length;
+    const n=filtered.filter(d=>d.portfolio===p).length;
     return `<div class="bar-row"><div class="bar-row-top"><span class="bar-label">${p}</span><span class="bar-val">${n}</span></div>
-      <div class="bar-track"><div class="bar-fill" style="width:${(n/DATA.length)*100}%;background:${portCols[i%portCols.length]}"></div></div></div>`;
+      <div class="bar-track"><div class="bar-fill" style="width:${filtered.length?((n/filtered.length)*100):0}%;background:${portCols[i%portCols.length]}"></div></div></div>`;
   }).join('');
   const colCols=MONTHS.map(m=>{
     const mDate=new Date(MONTH_DATES[m]), mEnd=new Date(mDate.getFullYear(),mDate.getMonth()+1,0);
-    const n=DATA.filter(d=>new Date(d.inicio)<=mEnd&&new Date(d.fin)>=mDate).length;
-    return `<div class="col-item"><span class="col-num">${n}</span><div class="col-bar" style="height:${Math.max((n/12)*80,2)}px"></div><span class="col-lbl">${m}</span></div>`;
+    const n=filtered.filter(d=>new Date(d.inicio)<=mEnd&&new Date(d.fin)>=mDate).length;
+    const maxN=Math.max(...MONTHS.map(mo=>{ const md=new Date(MONTH_DATES[mo]),me=new Date(md.getFullYear(),md.getMonth()+1,0); return filtered.filter(d=>new Date(d.inicio)<=me&&new Date(d.fin)>=md).length; }),1);
+    return `<div class="col-item"><span class="col-num">${n}</span><div class="col-bar" style="height:${Math.max((n/maxN)*80,2)}px"></div><span class="col-lbl">${m}</span></div>`;
   }).join('');
   document.getElementById('panel-resumen').innerHTML=`
     <div class="resumen-grid">
-      <div class="card"><h3>Estudios por Marca</h3>${marcaRows}</div>
+      <div class="card"><h3>Estudios por Marca</h3>${marcaRows||'<p style="color:#94a3b8;font-size:12px">Sin datos</p>'}</div>
       <div class="card"><h3>Estudios por Plataforma</h3>${platRows}</div>
       <div class="card"><h3>Portfolio Strategy</h3>${portRows}</div>
       <div class="card full-width"><h3>Estudios activos por mes</h3><div class="col-chart">${colCols}</div></div>
@@ -471,7 +472,7 @@ function render(){
   const filtered=getFiltered();
   document.getElementById('f-count').textContent=filtered.length+' estudios';
   if(currentTab==='gantt')        renderGantt(filtered);
-  else if(currentTab==='resumen') renderResumen();
+  else if(currentTab==='resumen') renderResumen(filtered);
   else if(currentTab==='tabla')   renderTabla(filtered);
   else if(currentTab==='benchmarks') renderBenchmarks();
   else if(currentTab==='resultados') renderResultados();
