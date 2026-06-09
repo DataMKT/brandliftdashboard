@@ -105,23 +105,18 @@
 <script>
 // ── DATOS GANTT ──────────────────────────────────────────────
 const DATA = [
-  {marca:"Brahma",campana:"Verano",tipo:"Brand Lift",plataforma:"Meta",objetivo:"Awareness + Producto + Concepto SED",portfolio:"Defend Core",estado:"Done",inicio:"2025-12-01",fin:"2026-02-28"},
-  {marca:"Brahma",campana:"Verano",tipo:"Brand Lift",plataforma:"TikTok",objetivo:"Awareness + Producto + Concepto SED",portfolio:"Defend Core",estado:"Done",inicio:"2025-12-01",fin:"2026-01-31"},
-  {marca:"Corona",campana:"Lollapalooza",tipo:"Brand Lift",plataforma:"TikTok",objetivo:"Fuerza en tiktok + awareness + target 18-24",portfolio:"Reignite Category",estado:"Done",inicio:"2026-03-01",fin:"2026-03-31"},
-  {marca:"Stella Artois",campana:"Perfect Serve: Roland Garros",tipo:"Brand Lift",plataforma:"Meta",objetivo:"Asociación de marca con Tenis (Hombres 25-34)",portfolio:"Grow Premium",estado:"In Progress",inicio:"2026-03-01",fin:"2026-07-31"},
-  {marca:"Quilmes",campana:"Promo Mundial",tipo:"Brand Lift",plataforma:"Meta",objetivo:"Consideración",portfolio:"Defend Core",estado:"In Progress",inicio:"2026-04-01",fin:"2026-06-30"},
-  {marca:"Quilmes",campana:"Promo Mundial",tipo:"Brand Lift",plataforma:"Youtube",objetivo:"Consideración",portfolio:"Defend Core",estado:"In Progress",inicio:"2026-04-01",fin:"2026-06-30"},
-  {marca:"Michelob Ultra",campana:"Lata Messi",tipo:"Brand Lift",plataforma:"Meta",objetivo:"Awareness + Consideración",portfolio:"Grow Premium",estado:"Set Up",inicio:"2026-05-01",fin:"2026-07-31"},
-  {marca:"Corona",campana:"Cero",tipo:"Brand Lift",plataforma:"Meta",objetivo:"Ocasión de consumo - almuerzos",portfolio:"Occasions",estado:"Set Up",inicio:"2026-05-01",fin:"2026-08-31"},
-  {marca:"Corona",campana:"Cero",tipo:"Multicell",plataforma:"TikTok",objetivo:"Ocasión de consumo - almuerzos",portfolio:"Occasions",estado:"Set Up",inicio:"2026-05-01",fin:"2026-08-31"},
-  {marca:"Quilmes",campana:"Mundial",tipo:"Brand Lift",plataforma:"Youtube",objetivo:"Brand Favorability",portfolio:"Defend Core",estado:"Not Started",inicio:"2026-05-01",fin:"2026-07-31"},
-  {marca:"Quilmes",campana:"Mundial",tipo:"Brand Lift",plataforma:"X",objetivo:"Brand Favorability",portfolio:"Defend Core",estado:"Not Started",inicio:"2026-05-01",fin:"2026-07-31"},
-  {marca:"Michelob Ultra",campana:"Mundial",tipo:"Brand Lift",plataforma:"Meta",objetivo:"TBD",portfolio:"Grow Premium",estado:"Not Started",inicio:"2026-06-01",fin:"2026-06-30"},
-  {marca:"Michelob Ultra",campana:"Mundial",tipo:"Brand Lift",plataforma:"Youtube",objetivo:"TBD",portfolio:"Grow Premium",estado:"Not Started",inicio:"2026-06-01",fin:"2026-06-30"},
-  {marca:"Michelob Ultra",campana:"Mundial",tipo:"Multicell",plataforma:"Meta",objetivo:"TBD",portfolio:"Grow Premium",estado:"Not Started",inicio:"2026-06-01",fin:"2026-06-30"},
-  {marca:"Michelob Ultra",campana:"Mundial",tipo:"Multicell",plataforma:"TikTok",objetivo:"TBD",portfolio:"Grow Premium",estado:"Not Started",inicio:"2026-06-01",fin:"2026-06-30"},
-  {marca:"Stella Artois",campana:"Pure Gold",tipo:"Brand Lift",plataforma:"Meta",objetivo:"TBD",portfolio:"Grow Premium",estado:"Not Started",inicio:"2026-07-01",fin:"2026-07-31"},
-  {marca:"Stella Artois",campana:"Pure Gold",tipo:"Multicell",plataforma:"Meta",objetivo:"TBD",portfolio:"Grow Premium",estado:"Not Started",inicio:"2026-07-01",fin:"2026-07-31"},
+  {marca:"Brahma",campana:"Verano",tipo:"Brand Lift",plataforma:"Meta",objetivo:"Awareness + Producto + Concepto SED",portfolio:"Defend Core",pp:"Brand",estado:"Done",inicio:"2025-12-01",fin:"2026-02-28"},
+  {marca:"Brahma",campana:"Verano",tipo:"Brand Lift",plataforma:"TikTok",objetivo:"Awareness + Producto + Concepto SED",portfolio:"Defend Core",pp:"Brand",estado:"Done",inicio:"2025-12-01",fin:"2026-01-31"},
+  {marca:"Corona",campana:"Lollapalooza",tipo:"Brand Lift",plataforma:"TikTok",objetivo:"Fuerza en tiktok + awareness + target 18-24",portfolio:"Reignite Category",pp:"Music",estado:"Done",inicio:"2026-03-01",fin:"2026-03-31"},
+  {marca:"Quilmes",campana:"Promo Mundial",tipo:"Brand Lift",plataforma:"Youtube",objetivo:"Consideración",portfolio:"Defend Core",pp:"Fútbol",estado:"Done",inicio:"2026-04-01",fin:"2026-04-30"},
+  {marca:"Stella Artois",campana:"Perfect Serve: Roland Garros",tipo:"Brand Lift",plataforma:"Meta",objetivo:"Asociación de marca con Tenis (Hombres 25-34)",portfolio:"Grow Premium",pp:"Sport",estado:"In Progress",inicio:"2026-03-01",fin:"2026-07-31"},
+  {marca:"Quilmes",campana:"Promo Mundial",tipo:"Brand Lift",plataforma:"Meta",objetivo:"Consideración",portfolio:"Defend Core",pp:"Fútbol",estado:"In Progress",inicio:"2026-04-01",fin:"2026-06-30"},
+  {marca:"Michelob Ultra",campana:"Mundial de Fútbol 2026",tipo:"Multicell",plataforma:"Meta",objetivo:"Awareness + Producto",portfolio:"Grow Premium",pp:"Fútbol",estado:"Set Up",inicio:"2026-05-01",fin:"2026-07-31"},
+  {marca:"Corona",campana:"Cero",tipo:"Brand Lift",plataforma:"Meta",objetivo:"Ocasión de consumo - almuerzos/relax",portfolio:"Occasions",pp:"Relax",estado:"In Progress",inicio:"2026-05-01",fin:"2026-08-31"},
+  {marca:"Corona",campana:"Cero",tipo:"Multicell",plataforma:"TikTok",objetivo:"Ocasión de consumo - almuerzos/relax",portfolio:"Occasions",pp:"Relax",estado:"In Progress",inicio:"2026-05-01",fin:"2026-08-31"},
+  {marca:"Quilmes",campana:"Mundial",tipo:"Brand Lift",plataforma:"X",objetivo:"Brand Favorability",portfolio:"Defend Core",pp:"Fútbol",estado:"Not Started",inicio:"2026-05-01",fin:"2026-07-31"},
+  {marca:"Stella Artois",campana:"Pure Gold",tipo:"Brand Lift",plataforma:"Meta",objetivo:"TBD",portfolio:"Grow Premium",pp:"",estado:"Not Started",inicio:"2026-07-01",fin:"2026-07-31"},
+  {marca:"Stella Artois",campana:"Pure Gold",tipo:"Multicell",plataforma:"Meta",objetivo:"TBD",portfolio:"Grow Premium",pp:"",estado:"Not Started",inicio:"2026-07-01",fin:"2026-07-31"},
 ];
 
 // ── DATOS BENCHMARKS ─────────────────────────────────────────
@@ -283,12 +278,12 @@ function renderGantt(filtered){
       <div class="gantt-cell">${badge(d.estado)}</div>
       <div class="gantt-cell"><span class="badge-tipo">${d.tipo}</span></div>
       <div class="gantt-bar-wrap">${gl}
-        <div class="gantt-bar" style="left:${left}%;width:${width}%;background:${c.bar}" title="${d.campana} · ${d.objetivo}"></div>
+        <div class="gantt-bar" style="left:${left}%;width:${width}%;background:${c.bar}" title="${d.campana} · ${d.objetivo}${d.pp?' · PP: '+d.pp:''}"></div>
       </div>
     </div>`;
   }).join('');
   document.getElementById('panel-gantt').innerHTML=`
-    <div class="gantt-wrap" style="min-width:700px">
+    <div class="gantt-wrap" style="min-width:750px">
       <div class="gantt-head">
         <div class="gantt-head-cell">Proyecto</div>
         <div class="gantt-head-cell">Estado</div>
@@ -344,8 +339,13 @@ function renderTabla(filtered){
   </tr>`).join('');
   document.getElementById('panel-tabla').innerHTML=`
     <div class="table-wrap"><table>
-      <thead><tr><th>Marca</th><th>Campaña</th><th>Tipo</th><th>Plataforma</th><th>Portfolio</th><th>Estado</th><th>Inicio</th><th>Fin</th></tr></thead>
-      <tbody>${rows}</tbody>
+      <thead><tr><th>Marca</th><th>Campaña</th><th>Tipo</th><th>Plataforma</th><th>Portfolio</th><th>PP</th><th>Estado</th><th>Inicio</th><th>Fin</th></tr></thead>
+      <tbody>${filtered.map(d=>`<tr>
+    <td><div style="display:flex;align-items:center;gap:6px"><div style="width:8px;height:8px;border-radius:50%;background:${MARCA_COLOR[d.marca]||'#6366f1'};flex-shrink:0"></div><strong style="color:#1e293b">${d.marca}</strong></div></td>
+    <td>${d.campana}</td><td><span class="badge-tipo">${d.tipo}</span></td>
+    <td>${d.plataforma}</td><td>${d.portfolio}</td><td>${d.pp||'—'}</td><td>${badge(d.estado)}</td>
+    <td>${d.inicio.slice(0,7)}</td><td>${d.fin.slice(0,7)}</td>
+  </tr>`).join('')}</tbody>
     </table></div>`;
 }
 
